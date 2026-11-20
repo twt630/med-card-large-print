@@ -8,7 +8,7 @@ const SAMPLE_BUTTONS = [
 
 export default function HeaderBar({ onLoadSample }) {
   return (
-    <header className="bg-amber-50 border-b-4 border-amber-200 px-4 py-4 lg:px-8">
+    <header className="no-print bg-amber-50 border-b-4 border-amber-200 px-4 py-4 lg:px-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <h1 className="text-2xl font-black leading-snug text-stone-900 lg:text-3xl">
           药明白 · 给爸妈的极简大字用药卡片

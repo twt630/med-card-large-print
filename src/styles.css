@@ -3,3 +3,59 @@
 body {
   background-color: #faf6ef;
 }
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  main {
+    display: block !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .print-full {
+    width: 100% !important;
+  }
+
+  /* 打印时卡片字号改用 pt，A4 纸上更适合长辈阅读 */
+  .card-title {
+    font-size: 24pt !important;
+    margin-bottom: 14pt !important;
+  }
+
+  .slot-title {
+    font-size: 16pt !important;
+    margin-bottom: 8pt !important;
+  }
+
+  .drug-name {
+    font-size: 20pt !important;
+  }
+
+  .dose-badge {
+    font-size: 15pt !important;
+    padding: 2pt 9pt !important;
+  }
+
+  .meal-badge {
+    font-size: 13pt !important;
+    padding: 2pt 8pt !important;
+  }
+
+  .note-badge {
+    font-size: 14pt !important;
+    padding: 3pt 10pt !important;
+  }
+}

@@ -26,7 +26,7 @@ export default function CardPreview({ card, domRef }) {
       }}
     >
       <h2
-        className="text-center"
+        className="card-title text-center"
         style={{ fontSize: '36px', fontWeight: 900, margin: '0 0 24px', color: '#1C1917' }}
       >
         {card.title}
@@ -49,6 +49,7 @@ export default function CardPreview({ card, domRef }) {
               style={{ backgroundColor: meta.bg, borderTop: `10px solid ${meta.bar}` }}
             >
               <h3
+                className="slot-title"
                 style={{ fontSize: '26px', fontWeight: 900, color: meta.text, margin: '0 0 12px' }}
               >
                 {meta.emoji} {meta.label}
@@ -58,11 +59,11 @@ export default function CardPreview({ card, domRef }) {
                 {drugs.map((drug) => (
                   <li key={drug.id} className="flex flex-wrap items-center gap-3">
                     <PillIcon type={drug.pillIcon} size={56} />
-                    <span style={{ fontSize: '34px', fontWeight: 900, color: '#1C1917', lineHeight: 1.2 }}>
+                    <span className="drug-name" style={{ fontSize: '34px', fontWeight: 900, color: '#1C1917', lineHeight: 1.2 }}>
                       {drug.name}
                     </span>
                     <span
-                      className="rounded-xl"
+                      className="dose-badge rounded-xl"
                       style={{
                         fontSize: '24px',
                         fontWeight: 900,
@@ -75,7 +76,7 @@ export default function CardPreview({ card, domRef }) {
                     </span>
                     {drug.meal && (
                       <span
-                        className="rounded-xl"
+                        className="meal-badge rounded-xl"
                         style={{
                           fontSize: '22px',
                           fontWeight: 700,
@@ -90,7 +91,7 @@ export default function CardPreview({ card, domRef }) {
                     )}
                     {drug.note && (
                       <span
-                        className="w-full rounded-full"
+                        className="note-badge w-full rounded-full"
                         style={{
                           fontSize: '24px',
                           fontWeight: 900,
