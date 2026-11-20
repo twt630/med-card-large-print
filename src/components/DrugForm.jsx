@@ -1,5 +1,6 @@
 import React from 'react'
 import { TIME_SLOTS } from '../lib/timeSlots.js'
+import PillIcon from './PillIcon.jsx'
 
 const MEAL_OPTIONS = ['', '饭前', '饭后', '随餐']
 const PILL_OPTIONS = [
@@ -95,17 +96,20 @@ export default function DrugForm({ index, drug, onChange, onRemove }) {
 
         <label className="flex flex-col gap-1">
           <span className="text-base font-bold text-stone-700">药片外观（选填）</span>
-          <select
-            value={drug.pillIcon}
-            onChange={(e) => onChange({ pillIcon: e.target.value })}
-            className="rounded-lg border-2 border-stone-300 px-3 py-2 text-xl focus:border-orange-500 focus:outline-none"
-          >
-            {PILL_OPTIONS.map(({ value, label }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
+          <span className="flex items-center gap-2">
+            <PillIcon type={drug.pillIcon} size={44} />
+            <select
+              value={drug.pillIcon}
+              onChange={(e) => onChange({ pillIcon: e.target.value })}
+              className="w-full rounded-lg border-2 border-stone-300 px-3 py-2 text-xl focus:border-orange-500 focus:outline-none"
+            >
+              {PILL_OPTIONS.map(({ value, label }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </span>
         </label>
 
         <label className="flex flex-col gap-1 sm:col-span-2">
