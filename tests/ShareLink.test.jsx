@@ -92,7 +92,7 @@ describe('ActionBar 分享按钮', () => {
     })
     render(<ActionBar card={SAMPLE_GRANDPA} cardNode={{ current: null }} />)
 
-    await user.click(screen.getByRole('button', { name: '🔗 发给爸妈看' }))
+    await user.click(screen.getByRole('button', { name: '🔗 发给家人看' }))
     expect(writeText).toHaveBeenCalledOnce()
     expect(writeText.mock.calls[0][0]).toMatch(/#share=/)
     expect(await screen.findByRole('status')).toHaveTextContent('专属链接已复制')
@@ -107,7 +107,7 @@ describe('ActionBar 分享按钮', () => {
         canAct={false}
       />,
     )
-    expect(screen.getByRole('button', { name: '🔗 发给爸妈看' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: '🔗 发给家人看' })).toBeDisabled()
   })
 })
 
@@ -136,18 +136,19 @@ describe('爸妈纯净阅读模式', () => {
     expect(screen.getByRole('button', { name: '📷 保存高清图' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '🔊 慢速念一遍' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '🖨 打印卡片' })).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: '🔗 发给爸妈看' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '🔗 发给家人看' })).not.toBeInTheDocument()
 
-    // 切回编辑模式
+    // 切回编辑模式：去掉 hash 回到多成员编辑界面
     await user.click(screen.getByRole('button', { name: '我是子女，我要修改药单' }))
     expect(screen.getByLabelText('编辑区')).toBeInTheDocument()
-    expect(screen.getByDisplayValue('爸妈阅读卡')).toBeInTheDocument()
+    expect(screen.getByLabelText('成员切换栏')).toBeInTheDocument()
+    expect(window.location.hash).toBe('')
   })
 
   it('阅读模式不写入 localStorage', () => {
     openWithHash()
     render(<App />)
-    expect(localStorage.getItem('yao-ming-bai-card-v1')).toBeNull()
+    expect(localStorage.getItem('yao-ming-bai-members-v1')).toBeNull()
   })
 
   it('普通打开仍是编辑模式', () => {

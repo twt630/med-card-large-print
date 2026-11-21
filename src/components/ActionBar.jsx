@@ -43,7 +43,7 @@ export default function ActionBar({ card, cardNode, canAct = true, showShare = t
     showStatus('正在生成高清图片…')
     try {
       await exportCardImage(cardNode.current)
-      showStatus('图片已保存，可直接发微信给爸妈')
+      showStatus('图片已保存，可直接发微信给家人')
     } catch (err) {
       showStatus(err.message || '图片生成失败，请重试')
     }
@@ -56,7 +56,7 @@ export default function ActionBar({ card, cardNode, canAct = true, showShare = t
   const handleShare = async () => {
     try {
       await copyText(buildShareUrl(card))
-      showStatus('专属链接已复制，发微信给爸妈即可直接看大字版')
+      showStatus('专属链接已复制，发微信给家人即可直接看大字版')
     } catch {
       showStatus('复制失败，请手动复制地址栏链接')
     }
@@ -102,7 +102,7 @@ export default function ActionBar({ card, cardNode, canAct = true, showShare = t
             disabled={!canAct}
             className={`whitespace-nowrap flex-1 rounded-xl bg-blue-600 px-5 py-4 text-lg font-black text-white shadow-md transition hover:bg-blue-700 active:scale-95 ${disabledClass}`}
           >
-            🔗 发给爸妈看
+            🔗 发给家人看
           </button>
         )}
       </div>

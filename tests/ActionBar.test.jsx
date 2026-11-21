@@ -136,7 +136,7 @@ describe('ActionBar 组件', () => {
     expect(screen.getByRole('button', { name: '📷 保存高清图' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '🔊 慢速念一遍' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '🖨 打印卡片' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '🔗 发给爸妈看' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '🔗 发给家人看' })).toBeInTheDocument()
   })
 
   it('canAct 为 false 时禁用全部操作按钮', () => {
@@ -145,7 +145,7 @@ describe('ActionBar 组件', () => {
       '📷 保存高清图',
       '🔊 慢速念一遍',
       '🖨 打印卡片',
-      '🔗 发给爸妈看',
+      '🔗 发给家人看',
     ].forEach((name) => {
       expect(screen.getByRole('button', { name })).toBeDisabled()
     })
@@ -155,7 +155,7 @@ describe('ActionBar 组件', () => {
     render(
       <ActionBar card={SAMPLE_GRANDPA} cardNode={{ current: null }} showShare={false} />,
     )
-    expect(screen.queryByRole('button', { name: '🔗 发给爸妈看' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '🔗 发给家人看' })).not.toBeInTheDocument()
   })
 
   it('浏览器不支持语音时给出提示', async () => {

@@ -1,9 +1,15 @@
 import React from 'react'
 import { COMMON_DRUGS } from '../data/samples.js'
 import DrugForm from './DrugForm.jsx'
+import MemberTabs from './MemberTabs.jsx'
 
 export default function EditorPanel({
   card,
+  members,
+  selectedId,
+  onSelectMember,
+  onAddMember,
+  onRemoveMember,
   onTitleChange,
   onAddDrug,
   onUpdateDrug,
@@ -14,6 +20,16 @@ export default function EditorPanel({
       aria-label="编辑区"
       className="flex flex-col gap-4 rounded-2xl bg-amber-50 p-4 lg:p-6"
     >
+      {members && (
+        <MemberTabs
+          members={members}
+          selectedId={selectedId}
+          onSelect={onSelectMember}
+          onAdd={onAddMember}
+          onRemove={onRemoveMember}
+        />
+      )}
+
       <label className="flex flex-col gap-1">
         <span className="text-base font-bold text-stone-700">卡片标题</span>
         <input

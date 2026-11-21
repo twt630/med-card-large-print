@@ -5,7 +5,7 @@ import { renderHook, act } from '@testing-library/react'
 import App from '../src/App.jsx'
 import CardPreview from '../src/components/CardPreview.jsx'
 import { createDrug } from '../src/data/samples.js'
-import { useMedications } from '../src/hooks/useMedications.js'
+import { useMembers } from '../src/hooks/useMembers.js'
 
 const PHOTO = 'data:image/png;base64,iVBORw0KGgo='
 const makeFile = (bytes = 1024, name = 'photo.png', type = 'image/png') =>
@@ -17,13 +17,13 @@ describe('数据层 photoData', () => {
   })
 
   it('新增与修改药品时可写入/清除 photoData', () => {
-    const { result } = renderHook(() => useMedications())
+    const { result } = renderHook(() => useMembers())
     act(() => result.current.addDrug({ name: '药A', dose: '1片', photoData: PHOTO }))
-    const added = result.current.card.drugs[0]
+    const added = result.current.selectedCard.drugs[3]
     expect(added.photoData).toBe(PHOTO)
 
     act(() => result.current.updateDrug(added.id, { photoData: '' }))
-    expect(result.current.card.drugs[0].photoData).toBe('')
+    expect(result.current.selectedCard.drugs[3].photoData).toBe('')
   })
 })
 
