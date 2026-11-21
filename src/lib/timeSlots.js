@@ -5,6 +5,8 @@ export const PILL_ICONS = ['white', 'yellowOval', 'redCapsule', 'blueCapsule', '
 export function groupDrugsBySlot(drugs) {
   return TIME_SLOTS.map((slot) => ({
     slot,
-    drugs: drugs.filter((drug) => drug.times.includes(slot)),
+    drugs: drugs.filter(
+      (drug) => drug.name.trim() !== '' && drug.times.includes(slot),
+    ),
   })).filter((group) => group.drugs.length > 0)
 }

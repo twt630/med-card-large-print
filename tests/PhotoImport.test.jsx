@@ -65,6 +65,9 @@ describe('DrugForm 上传与移除', () => {
     expect(
       within(panel).getByLabelText('选择 氨氯地平 的照片'),
     ).toHaveAttribute('type', 'file')
+    expect(
+      within(panel).getByLabelText('选择 氨氯地平 的照片'),
+    ).toHaveAttribute('accept', 'image/*')
   })
 
   it('上传照片后预览区显示照片', async () => {
@@ -78,7 +81,8 @@ describe('DrugForm 上传与移除', () => {
       expect(screen.getByAltText('氨氯地平的实拍照片')).toBeInTheDocument()
     })
     expect(within(panel).getByAltText('已选药品照片预览')).toBeInTheDocument()
-    expect(within(previewArea()).queryByRole('img', { name: '纯白圆片' })).not.toBeInTheDocument()
+    // 爷爷示例里阿托伐他汀也是白圆片，上传后仅剩它一个 SVG 图标
+    expect(within(previewArea()).getAllByRole('img', { name: '纯白圆片' })).toHaveLength(1)
   })
 
   it('超过 5MB 时给出提示且不上传', async () => {
@@ -90,7 +94,7 @@ describe('DrugForm 上传与移除', () => {
     await user.upload(input, makeFile(6 * 1024 * 1024))
     expect(await screen.findByRole('alert')).toHaveTextContent('照片超过 5MB')
     expect(screen.queryByAltText(/实拍照片/)).not.toBeInTheDocument()
-    expect(within(previewArea()).getByRole('img', { name: '纯白圆片' })).toBeInTheDocument()
+    expect(within(previewArea()).getAllByRole('img', { name: '纯白圆片' })).toHaveLength(2)
   })
 
   it('移除照片后回落 SVG 图标', async () => {
@@ -106,6 +110,6 @@ describe('DrugForm 上传与移除', () => {
 
     await user.click(within(panel).getByRole('button', { name: '✕ 移除照片' }))
     expect(screen.queryByAltText(/实拍照片/)).not.toBeInTheDocument()
-    expect(within(previewArea()).getByRole('img', { name: '纯白圆片' })).toBeInTheDocument()
+    expect(within(previewArea()).getAllByRole('img', { name: '纯白圆片' })).toHaveLength(2)
   })
 })

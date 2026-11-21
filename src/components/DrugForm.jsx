@@ -96,6 +96,11 @@ export default function DrugForm({ index, drug, onChange, onRemove }) {
               </label>
             ))}
           </div>
+          {drug.times.length === 0 && (
+            <p role="alert" className="text-base font-bold text-red-600">
+              请至少选择一个服用时段
+            </p>
+          )}
         </fieldset>
 
         <label className="flex flex-col gap-1">

@@ -1,5 +1,6 @@
 import React from 'react'
 import { groupDrugsBySlot } from '../lib/timeSlots.js'
+import { getCardWarnings } from '../lib/drugWarnings.js'
 import PillIcon from './PillIcon.jsx'
 
 // 卡片预览区内只使用 #hex 颜色（内联样式），
@@ -13,6 +14,7 @@ const SLOT_META = {
 
 export default function CardPreview({ card, domRef }) {
   const groups = groupDrugsBySlot(card.drugs)
+  const warnings = getCardWarnings(card.drugs)
 
   return (
     <div
@@ -25,6 +27,33 @@ export default function CardPreview({ card, domRef }) {
         color: '#1C1917',
       }}
     >
+      {warnings.length > 0 && (
+        <div
+          role="alert"
+          className="card-warning flex flex-col gap-1"
+          style={{
+            backgroundColor: '#DC2626',
+            borderRadius: '16px',
+            padding: '12px 16px',
+            marginBottom: '16px',
+          }}
+        >
+          {warnings.map((warning) => (
+            <p
+              key={warning}
+              style={{
+                color: '#FFFFFF',
+                fontSize: '20px',
+                fontWeight: 900,
+                margin: 0,
+                lineHeight: 1.4,
+              }}
+            >
+              ⚠️ {warning}
+            </p>
+          ))}
+        </div>
+      )}
       <h2
         className="card-title text-center"
         style={{ fontSize: '36px', fontWeight: 900, margin: '0 0 24px', color: '#1C1917' }}
@@ -34,7 +63,7 @@ export default function CardPreview({ card, domRef }) {
 
       {groups.length === 0 && (
         <p style={{ fontSize: '22px', textAlign: 'center', color: '#78716C', margin: '32px 0' }}>
-          还没有药品，先在左边添加几种药吧
+          还没有药品，先在编辑区添加几种药吧
         </p>
       )}
 

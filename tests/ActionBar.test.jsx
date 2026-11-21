@@ -131,17 +131,37 @@ describe('ActionBar 组件', () => {
     delete window.SpeechSynthesisUtterance
   })
 
-  it('渲染三个操作按钮', () => {
+  it('渲染四个操作按钮', () => {
     render(<ActionBar card={SAMPLE_GRANDPA} cardNode={{ current: null }} />)
-    expect(screen.getByRole('button', { name: '📷 保存高清卡片图片' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '🔊 慢速语音念一遍' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '📷 保存高清图' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '🔊 慢速念一遍' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '🖨 打印卡片' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '🔗 发给爸妈看' })).toBeInTheDocument()
+  })
+
+  it('canAct 为 false 时禁用全部操作按钮', () => {
+    render(<ActionBar card={SAMPLE_GRANDPA} cardNode={{ current: null }} canAct={false} />)
+    ;[
+      '📷 保存高清图',
+      '🔊 慢速念一遍',
+      '🖨 打印卡片',
+      '🔗 发给爸妈看',
+    ].forEach((name) => {
+      expect(screen.getByRole('button', { name })).toBeDisabled()
+    })
+  })
+
+  it('showShare 为 false 时不渲染分享按钮', () => {
+    render(
+      <ActionBar card={SAMPLE_GRANDPA} cardNode={{ current: null }} showShare={false} />,
+    )
+    expect(screen.queryByRole('button', { name: '🔗 发给爸妈看' })).not.toBeInTheDocument()
   })
 
   it('浏览器不支持语音时给出提示', async () => {
     const user = userEvent.setup()
     render(<ActionBar card={SAMPLE_GRANDPA} cardNode={{ current: null }} />)
-    await user.click(screen.getByRole('button', { name: '🔊 慢速语音念一遍' }))
+    await user.click(screen.getByRole('button', { name: '🔊 慢速念一遍' }))
     expect(screen.getByRole('status')).toHaveTextContent('当前浏览器不支持语音朗读')
   })
 
@@ -149,7 +169,7 @@ describe('ActionBar 组件', () => {
     const api = fakeSynth()
     const user = userEvent.setup()
     render(<ActionBar card={SAMPLE_GRANDPA} cardNode={{ current: null }} />)
-    const speakButton = screen.getByRole('button', { name: '🔊 慢速语音念一遍' })
+    const speakButton = screen.getByRole('button', { name: '🔊 慢速念一遍' })
     await user.click(speakButton)
 
     expect(api.speak).toHaveBeenCalledOnce()
@@ -164,6 +184,6 @@ describe('ActionBar 组件', () => {
     await user.click(stopButton)
     // speak() 开始前会 cancel() 清空队列，停止时再 cancel() 一次
     expect(api.cancel).toHaveBeenCalledTimes(2)
-    expect(screen.getByRole('button', { name: '🔊 慢速语音念一遍' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '🔊 慢速念一遍' })).toBeInTheDocument()
   })
 })

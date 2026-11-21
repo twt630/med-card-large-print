@@ -11,7 +11,7 @@ describe('编辑区', () => {
     expect(screen.getByDisplayValue('爷爷的每日吃药提醒')).toBeInTheDocument()
     expect(screen.getByDisplayValue('氨氯地平')).toBeInTheDocument()
     expect(screen.getByDisplayValue('二甲双胍')).toBeInTheDocument()
-    expect(screen.getByDisplayValue('硝苯地平')).toBeInTheDocument()
+    expect(screen.getByDisplayValue('阿托伐他汀')).toBeInTheDocument()
   })
 
   it('点击示例按钮整体切换到妈妈示例', async () => {
@@ -21,7 +21,7 @@ describe('编辑区', () => {
     expect(screen.getByDisplayValue('妈妈的感冒消炎用药')).toBeInTheDocument()
     expect(screen.getByDisplayValue('阿莫西林')).toBeInTheDocument()
     expect(screen.getByDisplayValue('感冒清热颗粒')).toBeInTheDocument()
-    expect(screen.queryByDisplayValue('硝苯地平')).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue('阿托伐他汀')).not.toBeInTheDocument()
   })
 
   it('编辑标题与药名即时生效', async () => {

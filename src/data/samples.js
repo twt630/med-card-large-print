@@ -45,7 +45,7 @@ export const COMMON_DRUGS = [
     dose: '1片',
     meal: '饭后',
     pillIcon: 'white',
-    note: '服药期间避免饮酒',
+    note: '绝对禁酒，建议饭后服用',
   },
   {
     name: '阿莫西林',
@@ -85,12 +85,42 @@ export const SAMPLE_GRANDPA = {
       note: '',
     },
     {
-      name: '硝苯地平',
+      name: '阿托伐他汀',
+      times: ['睡前'],
+      dose: '1片',
+      meal: '饭后',
+      pillIcon: 'white',
+      note: '忌吃西柚，睡前服用效果更好',
+    },
+  ],
+}
+
+export const SAMPLE_CONFLICT = {
+  title: '冲突预警演示 · 请核对药单',
+  drugs: [
+    {
+      name: '阿司匹林肠溶片',
       times: ['早'],
-      dose: '半片',
-      meal: '饭前',
-      pillIcon: 'redCapsule',
-      note: '血压过低时先暂停',
+      dose: '1片',
+      meal: '饭后',
+      pillIcon: 'white',
+      note: '长期服用请遵医嘱',
+    },
+    {
+      name: '布洛芬',
+      times: ['中'],
+      dose: '1片',
+      meal: '饭后',
+      pillIcon: 'white',
+      note: '绝对禁酒，建议饭后服用',
+    },
+    {
+      name: '头孢克肟',
+      times: ['早', '晚'],
+      dose: '1袋',
+      meal: '饭后',
+      pillIcon: 'granules',
+      note: '',
     },
   ],
 }
@@ -112,7 +142,7 @@ export const SAMPLE_MOM = {
       dose: '1片',
       meal: '饭后',
       pillIcon: 'white',
-      note: '绝对禁酒',
+      note: '绝对禁酒，建议饭后服用',
     },
     {
       name: '感冒清热颗粒',
