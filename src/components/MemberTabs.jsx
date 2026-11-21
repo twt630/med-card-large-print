@@ -84,7 +84,8 @@ export default function MemberTabs({ members, selectedId, onSelect, onAdd, onRem
             }}
             placeholder="称呼（如外婆、宝宝）"
             aria-label="新成员称呼"
-            className="w-44 rounded-lg border-2 border-stone-300 px-3 py-2 text-lg focus:border-orange-500 focus:outline-none"
+            style={{ minWidth: '15rem' }}
+            className="rounded-lg border-2 border-stone-300 px-3 py-2 text-lg focus:border-orange-500 focus:outline-none"
           />
           <button
             type="button"

@@ -99,6 +99,16 @@ describe('成员切换栏', () => {
     expect(screen.queryByLabelText('新成员称呼')).not.toBeInTheDocument()
   })
 
+  it('添加家人输入框最小宽度足够放下完整 placeholder（不截断）', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getByRole('button', { name: '＋ 添加家人' }))
+    const input = screen.getByLabelText('新成员称呼')
+    // placeholder 11 个全角字符（text-lg≈18px→约 198px）+ 内边距与边框 ≈ 226px，240px 不截断
+    expect(input.style.minWidth).toBe('15rem') // 240px
+    expect(input.placeholder).toBe('称呼（如外婆、宝宝）')
+  })
+
   it('添加家人支持回车提交，取消则不新增', async () => {
     const user = userEvent.setup()
     render(<App />)

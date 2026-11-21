@@ -19,7 +19,14 @@ export function createSpeaker() {
       utterance.lang = 'zh-CN'
       utterance.rate = 0.85
       utterance.onend = () => onend?.()
-      utterance.onerror = () => onerror?.()
+      utterance.onerror = (event) => {
+        // 用户主动停止（canceled）或被打断（interrupted）不是错误，按正常结束复位，不弹提示
+        if (event && (event.error === 'canceled' || event.error === 'interrupted')) {
+          onend?.()
+          return
+        }
+        onerror?.()
+      }
       synth.speak(utterance)
     },
     stop() {

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { buildSpeechText } from '../src/lib/speakText.js'
 import { createSpeaker } from '../src/lib/speak.js'
@@ -76,6 +76,24 @@ describe('createSpeaker', () => {
 
     speaker.stop()
     expect(api.cancel).toHaveBeenCalled()
+  })
+
+  it('canceled/interrupted 不触发 onerror，且走 onend 正常复位', () => {
+    const api = synth()
+    const speaker = createSpeaker()
+    const onend = vi.fn()
+    const onerror = vi.fn()
+    speaker.speak('念一遍', { onend, onerror })
+    const utterance = api.speak.mock.calls[0][0]
+
+    utterance.onerror({ error: 'canceled' })
+    utterance.onerror({ error: 'interrupted' })
+    expect(onerror).not.toHaveBeenCalled()
+    expect(onend).toHaveBeenCalledTimes(2)
+
+    utterance.onerror({ error: 'audio-busy' })
+    expect(onerror).toHaveBeenCalledOnce()
+    expect(onend).toHaveBeenCalledTimes(2)
   })
 })
 
@@ -185,5 +203,21 @@ describe('ActionBar 组件', () => {
     // speak() 开始前会 cancel() 清空队列，停止时再 cancel() 一次
     expect(api.cancel).toHaveBeenCalledTimes(2)
     expect(screen.getByRole('button', { name: '🔊 慢速念一遍' })).toBeInTheDocument()
+  })
+
+  it('主动停止触发的 canceled 错误不弹提示且复位朗读态', async () => {
+    const api = fakeSynth()
+    const user = userEvent.setup()
+    render(<ActionBar card={SAMPLE_GRANDPA} cardNode={{ current: null }} />)
+    await user.click(screen.getByRole('button', { name: '🔊 慢速念一遍' }))
+
+    // 模拟浏览器在 cancel 后抛出的 canceled 错误事件
+    const utterance = api.speak.mock.calls[0][0]
+    await act(async () => {
+      utterance.onerror({ error: 'canceled' })
+    })
+    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '🔊 慢速念一遍' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '⏹ 停止朗读' })).not.toBeInTheDocument()
   })
 })
