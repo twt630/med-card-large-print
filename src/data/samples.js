@@ -9,6 +9,7 @@ export function createDrug(partial = {}) {
     dose: '',
     meal: '',
     pillIcon: 'white',
+    photoData: '',
     note: '',
     ...partial,
   }

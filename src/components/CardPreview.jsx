@@ -58,7 +58,32 @@ export default function CardPreview({ card, domRef }) {
               <ul className="flex flex-col gap-4" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
                 {drugs.map((drug) => (
                   <li key={drug.id} className="flex flex-wrap items-center gap-3">
-                    <PillIcon type={drug.pillIcon} size={56} />
+                    {drug.photoData ? (
+                      <div
+                        className="drug-photo"
+                        style={{
+                          width: '56px',
+                          height: '56px',
+                          borderRadius: '12px',
+                          overflow: 'hidden',
+                          backgroundColor: '#F5F5F4',
+                          flexShrink: 0,
+                        }}
+                      >
+                        <img
+                          src={drug.photoData}
+                          alt={`${drug.name}的实拍照片`}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            display: 'block',
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <PillIcon type={drug.pillIcon} size={56} />
+                    )}
                     <span className="drug-name" style={{ fontSize: '34px', fontWeight: 900, color: '#1C1917', lineHeight: 1.2 }}>
                       {drug.name}
                     </span>
